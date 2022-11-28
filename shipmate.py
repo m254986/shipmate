@@ -3,7 +3,6 @@ import pygame
 
 from duty_van import Van
 from settings import Settings
-from interface import Interface
 
 # how to organize using classes and functions?
 clock = pygame.time.Clock()
@@ -28,6 +27,19 @@ class Shipmate:
                 if event.type == pygame.QUIT:
                     print("Thank you for playing!!")
                     sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        self.van.moving_right = True
+                    elif event.key == pygame.K_LEFT:
+                        self.van.moving_left = True
+                    elif event.key == pygame.K_q:
+                        sys.exit()
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT:
+                        self.van.moving_right = False
+                    elif event.key == pygame.K_LEFT:
+                        self.van.moving_left = False
+
             # 2. update game objects
             self.van.update()
             # 3. draw screen
