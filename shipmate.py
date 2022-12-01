@@ -2,10 +2,18 @@ import sys
 import pygame
 
 from duty_van import Van
-from settings import Settings
+from mid import Mid
 
 # how to organize using classes and functions?
 clock = pygame.time.Clock()
+screen = pygame.display.set_mode((128 * 5, 128 * 4))
+
+road = pygame.image.load('images/road_asphalt22.png')
+road_rect = road.get_rect()
+
+left_road = pygame.image.load('images/road_asphalt21.png')
+right_road = pygame.image.load('images/road_asphalt23.png')
+grass = pygame.image.load('images/land_grass11.png')
 
 class Shipmate:
     """Overall class to manage game assets and behavior."""
@@ -13,12 +21,12 @@ class Shipmate:
     def __init__(self):
         """Initialize the game, and create game resources."""
         pygame.init()
-        self.settings = Settings()
 
         self.screen = pygame.display.set_mode((128 * 5, 128 * 4))
         pygame.display.set_caption("SHIPMATE!")
 
-        self.van = Van(self)
+        self.van = Van(self.screen)
+        self.mid = Mid(self.screen)
 
     def run_game(self):
         while True:
@@ -42,16 +50,8 @@ class Shipmate:
 
             # 2. update game objects
             self.van.update()
+            self.mid.update()
             # 3. draw screen
-            screen = pygame.display.set_mode((128 * 5, 128 * 4))
-
-            road = pygame.image.load('images/road_asphalt22.png')
-            road_rect = road.get_rect()
-
-            left_road = pygame.image.load('images/road_asphalt21.png')
-            right_road = pygame.image.load('images/road_asphalt23.png')
-            grass = pygame.image.load('images/land_grass11.png')
-
             screen.blit(grass, (0, 0))
             screen.blit(grass, (0, road_rect.height))
             screen.blit(grass, (0, road_rect.height * 2))
@@ -77,12 +77,13 @@ class Shipmate:
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 2))
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 3))
             self.van.blitme()
+            self.mid.blitme()
+
             pygame.display.flip()
             # 4. win/lose conditions
+            # new screen?
 
-if __name__ == '__main__':
-    # Make a game instance then run da game!!
-    ai = Shipmate()
-    ai.run_game()
-
-clock.tick(60)
+while True:
+    shipmate = Shipmate()
+    shipmate.run_game()
+    clock.tick(60)

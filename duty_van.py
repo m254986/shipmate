@@ -2,12 +2,11 @@ import pygame
 
 class Van:
     """A class to manage the van."""
-
-    def __init__(self, ai_game):
+    # add bounds? end of road is boundary
+    def __init__(self, screen):
         """Initialize the van and set its start position!"""
-        self.screen = ai_game.screen
-        self.settings = ai_game.settings
-        self.screen_rect = ai_game.screen.get_rect()
+        self.screen = screen
+        self.screen_rect = screen.get_rect()
 
         # Load van img!!
         self.image = pygame.image.load('images/duty_van.png')
@@ -27,9 +26,9 @@ class Van:
         """Update pos based on movement flag"""
         # Update ship's x value, not rect
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += self.settings.van_speed
+            self.x += .25
         if self.moving_left and self.rect.left > 0:
-            self.x -= self.settings.van_speed
+            self.x -= .25
 
         # Update rect object from self.x
         self.rect.x = self.x
