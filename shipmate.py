@@ -1,12 +1,13 @@
 import sys
 import pygame
 
-from duty_van import Van
-from mid import Mid
+from duty_van1 import Duty_Van1
+from mid1 import Mid1
 
 # how to organize using classes and functions?
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((128 * 5, 128 * 4))
+max_offset = 128 * 4
 
 road = pygame.image.load('images/road_asphalt22.png')
 road_rect = road.get_rect()
@@ -26,7 +27,7 @@ class Shipmate:
         pygame.display.set_caption("SHIPMATE!")
 
         self.van = Van(self.screen)
-        self.mid = Mid(self.screen)
+        self.mid1 = Mid1()
 
     def run_game(self):
         while True:
@@ -50,7 +51,7 @@ class Shipmate:
 
             # 2. update game objects
             self.van.update()
-            self.mid.update()
+            self.mid1.update(max_offset)
             # 3. draw screen
             screen.blit(grass, (0, 0))
             screen.blit(grass, (0, road_rect.height))
@@ -77,13 +78,13 @@ class Shipmate:
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 2))
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 3))
             self.van.blitme()
-            self.mid.blitme()
+            self.mid1.blit(screen)
 
             pygame.display.flip()
+            clock.tick(60)
             # 4. win/lose conditions
             # new screen?
 
 while True:
     shipmate = Shipmate()
     shipmate.run_game()
-    clock.tick(60)
