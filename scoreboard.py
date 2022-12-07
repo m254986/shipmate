@@ -1,15 +1,14 @@
 import pygame
 
-# font and music easy additions!
-
 class Scoreboard:
     def __init__(self, screen):
         self.score = 0
         self.screen = screen
         self.screen_rect = screen.get_rect()
 
-        self.text_color = (30, 30, 30)
-        self.font = pygame.font.SysFont('ComicSans', 25)
+        self.text_color = (255, 255, 255)
+        self.font = pygame.font.SysFont('Impact', 25)
+        # how to implement font?
 
     def update(self,screen):
         self.score_image = self.font.render(f"Score: {self.score}", True, self.text_color)

@@ -9,7 +9,7 @@ class Duty_Van:
         self.screen_rect = screen.get_rect()
 
         # Load van img!!
-        self.image = pygame.image.load('images/duty_van.png')
+        self.image = pygame.image.load('images/duty_van2.png')
         self.rect = self.image.get_rect()
 
         # Start each new ship at the bottom center!!

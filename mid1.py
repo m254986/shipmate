@@ -1,11 +1,11 @@
 import pygame
 from random import randint
+import time
 
-# how to make fall cleanly form top?
-# add a beer?
 class Mid1:
     def __init__(self):
         self.image = pygame.image.load('images/mid.png')
+        self.mid_rect = self.image.get_rect()
         self.offset = 0
         self.x = 128*2
         self.y = 128*2
@@ -18,5 +18,7 @@ class Mid1:
         if self.offset > max_offset:
             self.offset = 0
             self.x = randint(128, 128*4)
+        if time == 5:
+            self.offset += 10
 
             # how to make appear smoothly from top?

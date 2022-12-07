@@ -6,9 +6,11 @@ from duty_van import Duty_Van
 from mid1 import Mid1
 from scoreboard import Scoreboard
 
-# how to organize using classes and functions?
+pygame.init()
+
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((128 * 5, 128 * 4))
+screen_rect = screen.get_rect()
 max_offset = 128 * 4
 
 road = pygame.image.load('images/road_asphalt22.png')
@@ -18,7 +20,9 @@ left_road = pygame.image.load('images/road_asphalt21.png')
 right_road = pygame.image.load('images/road_asphalt23.png')
 grass = pygame.image.load('images/land_grass11.png')
 
-
+pygame.mixer.music.load('images/hype.mp3')
+pygame.mixer.music.set_volume(50)
+pygame.mixer.music.play(-1)
 class Shipmate:
     """Overall class to manage game assets and behavior."""
 
@@ -54,6 +58,7 @@ class Shipmate:
                         self.duty_van.moving_left = False
 
             # 2. update game objects
+            # fix?
             self.duty_van.update()
             self.mid1.update(max_offset)
             self.scoreboard.update(screen)
@@ -99,16 +104,27 @@ class Shipmate:
             # 4. win/lose conditions
             if self.scoreboard.score == 25:
                 return True
+            # fix?
+            if self.mid1.mid_rect.bottom == self.duty_van.screen_rect.bottom:
+                return False
 
-
+# faster as time progresses how?
+# add bounds to road
+# add music
+# add font
+# people helped
+# mid hit bottom of screen?
+# menu?
+# add beer?
 shipmate = Shipmate()
 win = shipmate.run_game()
 if win:
     green = (0, 255, 0)
     screen.fill(green)
+
 else:
     red = (255, 0, 0)
     screen.fill(red)
 
 pygame.display.flip()
-time.sleep(5)
+time.sleep(2)
