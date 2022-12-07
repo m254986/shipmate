@@ -1,8 +1,9 @@
 import sys
 import pygame
 
-from duty_van1 import Duty_Van1
+from duty_van import Duty_Van
 from mid1 import Mid1
+from scoreboard import Scoreboard
 
 # how to organize using classes and functions?
 clock = pygame.time.Clock()
@@ -26,8 +27,9 @@ class Shipmate:
         self.screen = pygame.display.set_mode((128 * 5, 128 * 4))
         pygame.display.set_caption("SHIPMATE!")
 
-        self.van = Van(self.screen)
+        self.duty_van = Duty_Van(self.screen)
         self.mid1 = Mid1()
+        self.scoreboard = Scoreboard(screen)
 
     def run_game(self):
         while True:
@@ -38,20 +40,29 @@ class Shipmate:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        self.van.moving_right = True
+                        self.duty_van.moving_right = True
                     elif event.key == pygame.K_LEFT:
-                        self.van.moving_left = True
+                        self.duty_van.moving_left = True
                     elif event.key == pygame.K_q:
                         sys.exit()
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT:
-                        self.van.moving_right = False
+                        self.duty_van.moving_right = False
                     elif event.key == pygame.K_LEFT:
-                        self.van.moving_left = False
+                        self.duty_van.moving_left = False
 
             # 2. update game objects
-            self.van.update()
+            self.duty_van.update()
             self.mid1.update(max_offset)
+            self.scoreboard.update(screen)
+
+            # check for collision
+            print(self.mid1.offset)
+            if self.mid1.offset >= self.duty_van.y-25:
+                if self.mid1.x >= self.duty_van.x - 23 and self.mid1.x <= self.duty_van.x + 60:
+                    self.mid1.x = 10000
+                    self.scoreboard = collisions + 1
+
             # 3. draw screen
             screen.blit(grass, (0, 0))
             screen.blit(grass, (0, road_rect.height))
@@ -77,7 +88,7 @@ class Shipmate:
             screen.blit(grass, (road_rect.width * 4, road_rect.height))
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 2))
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 3))
-            self.van.blitme()
+            self.duty_van.blit(screen)
             self.mid1.blit(screen)
 
             pygame.display.flip()

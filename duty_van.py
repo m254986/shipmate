@@ -1,6 +1,6 @@
 import pygame
 
-class Van:
+class Duty_Van:
     """A class to manage the van."""
     # add bounds? end of road is boundary
     def __init__(self, screen):
@@ -13,6 +13,7 @@ class Van:
         self.rect = self.image.get_rect()
 
         # Start each new ship at the bottom center!!
+        self.y = 128 * 4 - 62
         self.rect.midbottom = self.screen_rect.midbottom
 
         # Store a decimal value for the ship's horiz pos
@@ -21,6 +22,10 @@ class Van:
         # Movement flag
         self.moving_right = False
         self.moving_left = False
+
+    def blit(self, screen):
+        """Draw the van at its current location!!"""
+        self.screen.blit(self.image, self.rect)
 
     def update(self):
         """Update pos based on movement flag"""
@@ -32,7 +37,3 @@ class Van:
 
         # Update rect object from self.x
         self.rect.x = self.x
-
-    def blitme(self):
-        """Draw the van at its current location!!"""
-        self.screen.blit(self.image, self.rect)
