@@ -1,5 +1,6 @@
 import sys
 import pygame
+import time
 
 from duty_van import Duty_Van
 from mid1 import Mid1
@@ -16,6 +17,7 @@ road_rect = road.get_rect()
 left_road = pygame.image.load('images/road_asphalt21.png')
 right_road = pygame.image.load('images/road_asphalt23.png')
 grass = pygame.image.load('images/land_grass11.png')
+
 
 class Shipmate:
     """Overall class to manage game assets and behavior."""
@@ -44,7 +46,7 @@ class Shipmate:
                     elif event.key == pygame.K_LEFT:
                         self.duty_van.moving_left = True
                     elif event.key == pygame.K_q:
-                        sys.exit()
+                        return False
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT:
                         self.duty_van.moving_right = False
@@ -57,11 +59,11 @@ class Shipmate:
             self.scoreboard.update(screen)
 
             # check for collision
-            print(self.mid1.offset)
-            if self.mid1.offset >= self.duty_van.y-25:
+            if self.mid1.offset >= self.duty_van.y - 25:
                 if self.mid1.x >= self.duty_van.x - 23 and self.mid1.x <= self.duty_van.x + 60:
                     self.mid1.x = 10000
-                    self.scoreboard = collisions + 1
+                    self.scoreboard.score = 1 + self.scoreboard.score
+
 
             # 3. draw screen
             screen.blit(grass, (0, 0))
@@ -90,12 +92,23 @@ class Shipmate:
             screen.blit(grass, (road_rect.width * 4, road_rect.height * 3))
             self.duty_van.blit(screen)
             self.mid1.blit(screen)
+            self.scoreboard.blit(screen)
 
             pygame.display.flip()
-            clock.tick(60)
+            clock.tick(120)
             # 4. win/lose conditions
-            # new screen?
+            if self.scoreboard.score == 25:
+                return True
 
-while True:
-    shipmate = Shipmate()
-    shipmate.run_game()
+
+shipmate = Shipmate()
+win = shipmate.run_game()
+if win:
+    green = (0, 255, 0)
+    screen.fill(green)
+else:
+    red = (255, 0, 0)
+    screen.fill(red)
+
+pygame.display.flip()
+time.sleep(5)

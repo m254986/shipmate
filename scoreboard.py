@@ -4,19 +4,16 @@ import pygame
 
 class Scoreboard:
     def __init__(self, screen):
-        self.score = collisions
+        self.score = 0
         self.screen = screen
         self.screen_rect = screen.get_rect()
 
         self.text_color = (30, 30, 30)
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.SysFont('ComicSans', 25)
 
-        self.update()
-
-    def update(self):
-        self.score_image = self.font.render(collisions, True, self.text_color)
-
-        self.score_rect = score.image.get_rect()
+    def update(self,screen):
+        self.score_image = self.font.render(f"Score: {self.score}", True, self.text_color)
+        self.score_rect = self.score_image.get_rect()
         self.score_rect.right = self.screen_rect.right - 32
         self.score_rect.top = 32
 
