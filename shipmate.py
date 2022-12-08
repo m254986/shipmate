@@ -34,7 +34,7 @@ class Shipmate:
         pygame.display.set_caption("SHIPMATE!")
 
         self.duty_van = Duty_Van(self.screen)
-        self.mid1 = Mid1()
+        self.mid1 = Mid1(screen)
         self.scoreboard = Scoreboard(screen)
 
     def run_game(self):
@@ -44,6 +44,8 @@ class Shipmate:
                 if event.type == pygame.QUIT:
                     print("Thank you for playing!!")
                     sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    return False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         self.duty_van.moving_right = True
@@ -60,15 +62,19 @@ class Shipmate:
             # 2. update game objects
             # fix?
             self.duty_van.update()
-            self.mid1.update(max_offset)
+            self.mid1.update(max_offset, time)
             self.scoreboard.update(screen)
 
             # check for collision
-            if self.mid1.offset >= self.duty_van.y - 25:
+            if self.mid1.offset >= self.duty_van.y - 1:
                 if self.mid1.x >= self.duty_van.x - 23 and self.mid1.x <= self.duty_van.x + 60:
-                    self.mid1.x = 10000
+                    self.mid1.x = 1000
                     self.scoreboard.score = 1 + self.scoreboard.score
+                if self.mid1.mid_rect.bottom <= screen_rect.bottom:
+                    pass
 
+            # self.mid1.x < self.duty_van.x - 23 or self.mid1.x > self.duty_van.x + 60:
+            # self.mid1.mid_rect.bottom == screen_rect.bottom:
 
             # 3. draw screen
             screen.blit(grass, (0, 0))
@@ -100,13 +106,10 @@ class Shipmate:
             self.scoreboard.blit(screen)
 
             pygame.display.flip()
-            clock.tick(120)
+            clock.tick(60)
             # 4. win/lose conditions
             if self.scoreboard.score == 25:
                 return True
-            # fix?
-            if self.mid1.mid_rect.bottom == self.duty_van.screen_rect.bottom:
-                return False
 
 # faster as time progresses how?
 # add bounds to road
@@ -116,6 +119,7 @@ class Shipmate:
 # mid hit bottom of screen?
 # menu?
 # add beer?
+
 shipmate = Shipmate()
 win = shipmate.run_game()
 if win:

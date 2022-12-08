@@ -30,10 +30,10 @@ class Duty_Van:
     def update(self):
         """Update pos based on movement flag"""
         # Update ship's x value, not rect
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += 5
-        if self.moving_left and self.rect.left > 0:
-            self.x -= 5
+        if self.moving_right and self.rect.right < self.screen_rect.right - 128:
+            self.x += 10
+        if self.moving_left and self.rect.left - 128 > 0:
+            self.x -= 10
 
         # Update rect object from self.x
         self.rect.x = self.x
