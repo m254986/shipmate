@@ -21,7 +21,7 @@ class Mid1:
     def update(self, max_offset, time):
         self.offset += 10
         if self.offset > max_offset:
-            self.offset = 0
-            self.x = randint(128, 128*4)
+            return False
         elif self.time == 5000:
             self.offset += 20
+            return True

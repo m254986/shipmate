@@ -1,6 +1,7 @@
 import sys
 import pygame
 import time
+from random import randint
 
 from duty_van import Duty_Van
 from mid1 import Mid1
@@ -61,7 +62,8 @@ class Shipmate:
 
             # 2. update game objects
             self.duty_van.update()
-            self.mid1.update(max_offset, time)
+            if self.mid1.update(max_offset, time) == False:
+                return False
             self.scoreboard.update(screen)
 
             # check for collision
@@ -69,8 +71,9 @@ class Shipmate:
                 if self.mid1.x >= self.duty_van.x - 23 and self.mid1.x <= self.duty_van.x + 60:
                     self.mid1.x = 1000
                     self.scoreboard.score = 1 + self.scoreboard.score
-                if self.mid1.mid_rect.bottom <= screen_rect.bottom:
-                    pass
+                    self.mid1.offset = 0
+                    self.mid1.x = randint(128, 128 * 4)
+
 
             # 3. draw screen
             screen.blit(grass, (0, 0))
