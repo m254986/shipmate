@@ -60,7 +60,6 @@ class Shipmate:
                         self.duty_van.moving_left = False
 
             # 2. update game objects
-            # fix?
             self.duty_van.update()
             self.mid1.update(max_offset, time)
             self.scoreboard.update(screen)
@@ -72,9 +71,6 @@ class Shipmate:
                     self.scoreboard.score = 1 + self.scoreboard.score
                 if self.mid1.mid_rect.bottom <= screen_rect.bottom:
                     pass
-
-            # self.mid1.x < self.duty_van.x - 23 or self.mid1.x > self.duty_van.x + 60:
-            # self.mid1.mid_rect.bottom == screen_rect.bottom:
 
             # 3. draw screen
             screen.blit(grass, (0, 0))
@@ -110,15 +106,6 @@ class Shipmate:
             # 4. win/lose conditions
             if self.scoreboard.score == 25:
                 return True
-
-# faster as time progresses how?
-# add bounds to road
-# add music
-# add font
-# people helped
-# mid hit bottom of screen?
-# menu?
-# add beer?
 
 shipmate = Shipmate()
 win = shipmate.run_game()

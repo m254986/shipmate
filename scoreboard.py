@@ -8,7 +8,6 @@ class Scoreboard:
 
         self.text_color = (255, 255, 255)
         self.font = pygame.font.SysFont('Impact', 25)
-        # how to implement font?
 
     def update(self,screen):
         self.score_image = self.font.render(f"Score: {self.score}", True, self.text_color)

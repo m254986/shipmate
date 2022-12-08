@@ -2,7 +2,6 @@ import pygame
 
 class Duty_Van:
     """A class to manage the van."""
-    # add bounds? end of road is boundary
     def __init__(self, screen):
         """Initialize the van and set its start position!"""
         self.screen = screen

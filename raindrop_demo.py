@@ -4,6 +4,7 @@ from random import randint
 from raindrop import Raindrop
 
 # how is creating a class different?
+# how to make fall cleanly from top?
 
 screen = pygame.display.set_mode((400, 400))
 screen_rect = screen.get_rect()
